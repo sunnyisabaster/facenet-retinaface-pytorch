@@ -25,7 +25,7 @@ def cv2ImgAddText(img, label, left, top, textColor=(255, 255, 255)):
     #---------------#
     #   设置字体
     #---------------#
-    font = ImageFont.truetype(font='model_data/simhei.ttf', size=20)
+    font = ImageFont.truetype(font='/content/facenet-retinaface-pytorch/model_data/simhei.ttf', size=20)
 
     draw = ImageDraw.Draw(img)
     label = label.encode('utf-8')
@@ -42,7 +42,7 @@ class Retinaface(object):
         #----------------------------------------------------------------------#
         #   retinaface训练完的权值路径
         #----------------------------------------------------------------------#
-        "retinaface_model_path" : 'model_data/Retinaface_mobilenet0.25.pth',
+        "retinaface_model_path" : '/content/facenet-retinaface-pytorch/model_data/Retinaface_mobilenet0.25.pth',
         #----------------------------------------------------------------------#
         #   retinaface所使用的主干网络，有mobilenet和resnet50
         #----------------------------------------------------------------------#
@@ -71,7 +71,7 @@ class Retinaface(object):
         #----------------------------------------------------------------------#
         #   facenet训练完的权值路径
         #----------------------------------------------------------------------#
-        "facenet_model_path"    : 'model_data/facenet_mobilenet.pth',
+        "facenet_model_path"    : '/content/facenet-retinaface-pytorch/model_data/facenet_mobilenet.pth',
         #----------------------------------------------------------------------#
         #   facenet所使用的主干网络， mobilenet和inception_resnetv1
         #----------------------------------------------------------------------#
@@ -122,8 +122,8 @@ class Retinaface(object):
         self.generate()
 
         try:
-            self.known_face_encodings = np.load("model_data/{backbone}_face_encoding.npy".format(backbone=self.facenet_backbone))
-            self.known_face_names     = np.load("model_data/{backbone}_names.npy".format(backbone=self.facenet_backbone))
+            self.known_face_encodings = np.load("/content/facenet-retinaface-pytorch/model_data/{backbone}_face_encoding.npy".format(backbone=self.facenet_backbone))
+            self.known_face_names     = np.load("/content/facenet-retinaface-pytorch/model_data/{backbone}_names.npy".format(backbone=self.facenet_backbone))
         except:
             if not encoding:
                 print("载入已有人脸特征失败，请检查model_data下面是否生成了相关的人脸特征文件。")
@@ -267,8 +267,8 @@ class Retinaface(object):
                 face_encoding = self.facenet(crop_img)[0].cpu().numpy()
                 face_encodings.append(face_encoding)
 
-        np.save("model_data/{backbone}_face_encoding.npy".format(backbone=self.facenet_backbone),face_encodings)
-        np.save("model_data/{backbone}_names.npy".format(backbone=self.facenet_backbone),names)
+        np.save("/content/facenet-retinaface-pytorch/model_data/{backbone}_face_encoding.npy".format(backbone=self.facenet_backbone),face_encodings)
+        np.save("/content/facenet-retinaface-pytorch/model_data/{backbone}_names.npy".format(backbone=self.facenet_backbone),names)
 
     #---------------------------------------------------#
     #   检测图片
